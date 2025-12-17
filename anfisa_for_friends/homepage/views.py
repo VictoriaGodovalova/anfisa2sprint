@@ -8,15 +8,12 @@ from ice_cream.models import IceCream
 def index(request):
     template_name = 'homepage/index.html'
 
-    ice_cream_list = (
-        IceCream.objects.values(
-            'id',
-            'title',
-            'description',
-            'wrapper__title'
-        )
-        .filter(is_on_main=True, is_published=True)
-        .order_by('title')
+    ice_cream_list = IceCream.objects.values(
+        'id', 'title', 'price', 'description'
+    ).filter(
+        is_published=True,
+        is_on_main=True,
+        category__is_published=True
     )
 
     context = {
